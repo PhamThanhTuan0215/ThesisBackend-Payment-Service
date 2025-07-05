@@ -173,9 +173,11 @@ module.exports.updatePaymentStatusByOrderID = async (req, res) => {
         await payment.update({ status });
 
         // gọi api order service để cập nhật trạng thái thanh toán đơn hàng
-        orderServiceAxios.put(`/orders/${payment.order_id}`, {
+        const response = await orderServiceAxios.put(`/orders/${payment.order_id}`, {
             payment_status: status
         });
+
+        console.log('response data:', response.data);
 
         res.json({
             code: 0,
